@@ -20,6 +20,6 @@
 	<key>RunAtLoad</key>
 	<true/>
 	<key>WorkingDirectory</key>
-	<string>/Users/dustin/src/onair</string>
+	<string>/Users/username/src/onair</string>
 </dict>
 </plist>
