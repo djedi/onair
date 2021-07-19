@@ -15,10 +15,17 @@ function get_tabs () {
     else
         if [[ $tabs =~ $meet ]] || [[ $tabs =~ $gtm ]] || [[ $tabs =~ $zoom ]]; then
             echo "found"
-        else
-            echo "nomeet"
+            return
         fi
     fi
+
+    # Also check for MeetInOne app
+    number=$(ps aux | grep -v grep | grep -ci MeetInOne)
+    if [ $number -gt 0 ]; then
+        echo "found";
+        return
+    fi
+    echo "nomeet"
 }
 
 function check_meet () {
@@ -29,7 +36,7 @@ function check_meet () {
     if [[ $found == "found" ]] ; then
         if [[ $MEET_ON_AIR != "on" ]] ; then
             echo "Turning on the light"
-			/usr/local/bin/dark-mode off
+            /usr/local/bin/dark-mode off
             MEET_ON_AIR=on
             trigger=1
         fi
@@ -37,7 +44,7 @@ function check_meet () {
     if [[ $found == "nomeet" ]] ; then
         if [[ $MEET_ON_AIR != "off" ]] ; then
             echo "Triggering light out"
-			/usr/local/bin/dark-mode on
+            /usr/local/bin/dark-mode on
             MEET_ON_AIR=off
             trigger=1
         fi
