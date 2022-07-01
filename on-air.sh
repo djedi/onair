@@ -8,7 +8,6 @@ function get_tabs () {
     # echo $tabs
     local meet="https:\/\/meet\.google\.com"
     local gtm="https:\/\/global\.gotomeeting\.com\/join\/"
-    local zoom="https:\/\/.+\.zoom\.us\/"
     local error="execution error"
     if [[ tabs =~ $error ]]; then
         echo "broke"
@@ -19,12 +18,20 @@ function get_tabs () {
         fi
     fi
 
-    # Also check for MeetInOne app
+    # Check for MeetInOne app
     number=$(ps aux | grep -v grep | grep -ci MeetInOne)
     if [ $number -gt 0 ]; then
         echo "found";
         return
     fi
+
+    # Check for Zoom app
+    number=$(ps aux | grep -v grep | grep -ci Zoom)
+    if [ $number -gt 0 ]; then
+        echo "found";
+        return
+    fi
+
     echo "nomeet"
 }
 
